@@ -43,9 +43,9 @@ class _RegisterPageState extends State<RegisterPage> {
         // create the user
         UserCredential? userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
+              email: emailController.text,
+              password: passwordController.text,
+            );
 
         // pop loading circle
         Navigator.pop(context);
@@ -61,6 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
@@ -71,17 +72,26 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // logo
-                Icon(
-                  Icons.person,
-                  size: 80,
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                ),
-                const SizedBox(height: 25),
+                if (brightness == Brightness.light)
+                  SizedBox(
+                    height: 250,
+                    width: 250,
+                    child: Image.asset(
+                      "assets/icons/speedygram_icon.png",
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                else
+                  SizedBox(
+                    height: 250,
+                    width: 250,
+                    child: Image.asset(
+                      "assets/icons/speedygram_inverted_icon.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
 
-                // app name
-                const Text("S P E E D Y G R A M", style: TextStyle(fontSize: 20)),
-
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
 
                 // username textField
                 MyTextField(
@@ -137,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

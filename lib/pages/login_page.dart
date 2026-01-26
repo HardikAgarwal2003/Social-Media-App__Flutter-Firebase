@@ -7,7 +7,7 @@ import 'package:social_media_app_flutter_firebase/helper/helper_functions.dart';
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
 
-  LoginPage({super.key, required this.onTap});
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -47,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
@@ -56,17 +57,26 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // logo
-              Icon(
-                Icons.person,
-                size: 80,
-                color: Theme.of(context).colorScheme.inversePrimary,
-              ),
-              const SizedBox(height: 25),
+              if (brightness == Brightness.light)
+                SizedBox(
+                  height: 250,
+                  width: 250,
+                  child: Image.asset(
+                    "assets/icons/speedygram_icon.png",
+                    fit: BoxFit.fill,
+                  ),
+                )
+              else
+                SizedBox(
+                  height: 250,
+                  width: 250,
+                  child: Image.asset(
+                    "assets/icons/speedygram_inverted_icon.png",
+                    fit: BoxFit.fill,
+                  ),
+                ),
 
-              // app name
-              const Text("S P E E D Y G R A M", style: TextStyle(fontSize: 20)),
-
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
 
               // email textField
               MyTextField(
