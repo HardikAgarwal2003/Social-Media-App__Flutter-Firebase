@@ -5,9 +5,7 @@ import 'package:social_media_app_flutter_firebase/components/my_drawer.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  void logoutUser() {
-    FirebaseAuth.instance.signOut();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +13,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
-        title: Center(child: Text("Home")),
+        title: Text("Home"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         titleTextStyle: TextTheme.of(context).titleLarge?.apply(color: brightness == Brightness.light ? Colors.white : Colors.black,),
-        // titleTextStyle: TextStyle(
-        //   color: brightness == Brightness.light ? Colors.white : Colors.black,
-        // ),
-        actions: [IconButton(onPressed: logoutUser, icon: Icon(Icons.logout))],
+        centerTitle: true
       ),
       drawer: MyDrawer(brightness: brightness),
     );

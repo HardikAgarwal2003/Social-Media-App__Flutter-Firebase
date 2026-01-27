@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app_flutter_firebase/components/my_button.dart';
@@ -19,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
 
   final TextEditingController confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
 
   final TextEditingController usernameController = TextEditingController();
 
@@ -43,9 +44,12 @@ class _RegisterPageState extends State<RegisterPage> {
         // create the user
         UserCredential? userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-              email: emailController.text,
-              password: passwordController.text,
-            );
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // create a user document and add to firestore
+        createUserDocument(userCredential);
 
         // pop loading circle
         Navigator.pop(context);
@@ -59,11 +63,26 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  // create the user document and collect them in cloud firestore
+  Future<void> createUserDocument(UserCredential userCredential) async {
+    if (userCredential.user != null) {
+      await FirebaseFirestore.instance.collection("Users").doc(
+          userCredential.user?.email).set({
+        "email": userCredential.user!.email,
+        "username": usernameController.text.trim()
+      });
+  }}
+
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    Brightness brightness = MediaQuery
+        .of(context)
+        .platformBrightness;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme
+          .of(context)
+          .colorScheme
+          .surface,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -150,4 +169,6 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
+
 }

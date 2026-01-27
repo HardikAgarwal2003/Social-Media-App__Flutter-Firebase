@@ -6,6 +6,10 @@ class MyDrawer extends StatelessWidget {
 
   const MyDrawer({super.key, required this.brightness});
 
+  void logoutUser() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -39,7 +43,7 @@ class MyDrawer extends StatelessWidget {
                       Icons.home_rounded,
                       color: Theme.of(context).colorScheme.inversePrimary,
                     ),
-                    title: Text("H O M E"),
+                    title: const Text("H O M E"),
                     // this is already Home tile
                     onTap: () {
                       Navigator.pop(context);
@@ -55,10 +59,14 @@ class MyDrawer extends StatelessWidget {
                       Icons.person_2_rounded,
                       color: Theme.of(context).colorScheme.inversePrimary,
                     ),
-                    title: Text("P R O F I L E"),
+                    title: const Text("P R O F I L E"),
                     // this is already Home tile
                     onTap: () {
+                      // close the drawer
                       Navigator.pop(context);
+
+                      // navigate to profile page
+                      Navigator.pushNamed(context, "/profile_page");
                     },
                   ),
                 ),
@@ -71,10 +79,14 @@ class MyDrawer extends StatelessWidget {
                       Icons.people_rounded,
                       color: Theme.of(context).colorScheme.inversePrimary,
                     ),
-                    title: Text("U S E R S"),
+                    title: const Text("U S E R S"),
                     // this is already Home tile
                     onTap: () {
+                      // close the drawer
                       Navigator.pop(context);
+
+                      // navigate to users page
+                      Navigator.pushNamed(context, "/users_page");
                     },
                   ),
                 ),
@@ -92,9 +104,13 @@ class MyDrawer extends StatelessWidget {
               ),
               title: Text("L O G O U T"),
               // this is already Home tile
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-              },
+              onTap: (){
+                // close the drawer
+                Navigator.pop(context);
+
+                // logout user
+                logoutUser();
+              }
             ),
           ),
         ],
