@@ -2,33 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app_flutter_firebase/helper/helper_functions.dart';
 
+import '../components/my_back_button.dart';
+
 class UsersPage extends StatelessWidget {
   const UsersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = MediaQuery
-        .of(context)
-        .platformBrightness;
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Users"),
-        iconTheme: IconThemeData(color: Theme
-            .of(context)
-            .colorScheme
-            .primary),
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .inversePrimary,
-        titleTextStyle: TextTheme
-            .of(context)
-            .titleLarge
-            ?.apply(
-          color: brightness == Brightness.light ? Colors.white : Colors.black,
-        ),
-        centerTitle: true,
-      ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection("Users").snapshots(),
         builder: (context, snapshot) {
@@ -48,16 +30,31 @@ class UsersPage extends StatelessWidget {
 
           // get all users
           final users = snapshot.data!.docs;
-          return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                // get individual user
-                final user = users[index];
-                return ListTile(
-                  title: Text(user["username"]),
-                  subtitle: Text(user["email"]),
-                );
-              });
+
+          return Column(
+            children: [
+              // My back button
+              Padding(
+                padding: EdgeInsets.only(top: 50, left: 25),
+                child: Row(children: [MyBackButton()]),
+              ),
+
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.only(left: 16),
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    // get individual user
+                    final user = users[index];
+                    return ListTile(
+                      title: Text(user["username"]),
+                      subtitle: Text(user["email"]),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
