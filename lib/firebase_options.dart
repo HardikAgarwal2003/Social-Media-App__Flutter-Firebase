@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'speedy-gram.firebasestorage.app',
     iosBundleId: 'com.example.socialMediaAppFlutterFirebase',
   );
+
 }

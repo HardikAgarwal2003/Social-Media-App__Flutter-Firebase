@@ -79,7 +79,7 @@ class ProfilePage extends StatelessWidget {
                   // email
                   Text(
                     user['email'],
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: Colors.grey[500]),
                   ),
                 ],
               ),

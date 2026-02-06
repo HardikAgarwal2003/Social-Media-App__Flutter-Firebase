@@ -33,8 +33,9 @@ class Firestore {
   Stream<QuerySnapshot> getPostsStream() {
     final postsStream = FirebaseFirestore.instance
         .collection("Posts")
-        .orderBy("TimeStamp", descending: true)
+        .orderBy("timeStamp", descending: true)
         .snapshots();
+
     return postsStream;
   }
 }
