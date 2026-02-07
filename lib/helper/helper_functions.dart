@@ -1,8 +1,3 @@
-import 'package:flutter/material.dart';
-
-void showMessageToUser(String message, BuildContext context){
-  showDialog(context: context, builder: (context) => AlertDialog(
-    title: Text(message),
-
-  ));
+bool isValidEmail(String email) {
+  return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
 }
